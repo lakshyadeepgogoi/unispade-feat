@@ -1,0 +1,44 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.TabContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  margin-bottom: 20px;
+}
+
+.LeftTabs {
+  display: flex;
+  gap: 10px;
+}
+
+.RightTab {
+  margin-left: auto;
+}
+
+.Tab {
+  padding: 15px 20px;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+}
+
+.Tab.active {
+  background-color: #ccc;
+}
+
+.TabContent {
+  display: block;
+  padding: 20px;
+  
+}
+
+.TabContent.active {
+  display: block;
+}
