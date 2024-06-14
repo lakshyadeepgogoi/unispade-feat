@@ -42,3 +42,9 @@
 .TabContent.active {
   display: block;
 }
+
+
+.availability-icon{
+  display: flex;
+  gap: 4px;
+}

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
 import TabContent from './components/TabContent';
+import { SlCalender } from "react-icons/sl";
+
 
 function App() {
-  const [activeTab, setActiveTab] = useState('YourSessions'); 
+  const [activeTab, setActiveTab] = useState('YourSessions');
 
   const handleTabClick = (tab) => {
-    setActiveTab(tab); 
+    setActiveTab(tab);
   };
 
   return (
@@ -28,7 +30,11 @@ function App() {
           </div>
         </div>
         <div className={`Tab RightTab ${activeTab === 'YourAvailability' ? 'active' : ''}`} onClick={() => handleTabClick('YourAvailability')}>
-          Your Availability
+          <div className='availability-icon'>
+            <SlCalender />
+            Your Availability
+
+          </div>
         </div>
       </div>
 

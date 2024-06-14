@@ -1,6 +1,6 @@
 import React from 'react';
-import './TabContent.css'; // Import any specific CSS for this component
-import YourSessions from './YourSessions';
+import './TabContent.css'; 
+import YourSessions from './YourSessions/YourSessions';
 import Requests from './Requests';
 import Upcoming from './Upcoming';
 import History from './History';

@@ -1,0 +1,111 @@
+.your-sessions-container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create-session-box {
+  background-color: rgb(240, 239, 239);
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+.create-session-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.sessions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+}
+
+.sessions-list .session-item {
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.session-type{
+  width: 60px;
+  font-size: small;
+
+
+}
+
+.sessions-list  .session-type {
+  background-color: lightgrey;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.session-title{
+  font-size: 40px;
+  color: black;
+}
+
+
+.sessions-list .session-item .session-details {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  padding: 12px;
+  border-radius: 4px;
+  
+}
+
+ .session-duration,
+.sessions-list .session-item .session-details  {
+  font-size: small;
+  color: grey;
+  display: flex;
+  justify-content: space-between;
+  gap:2px
+  
+}
+
+.session-price{
+  color: black;
+  font-size: small;
+
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+
+}
+
+.sessions-list .session-item .session-description {
+  color: grey;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right-icon{
+  size: 4px;
+}

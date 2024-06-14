@@ -1,0 +1,80 @@
+.session-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.session-form-container {
+  background: white;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.session-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.session-form-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.session-type-button {
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.session-type-button.active {
+  border-color: black;
+  color: black;
+}
+
+.session-form-content {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.session-form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.session-form-field label {
+  margin-bottom: 5px;
+}
+
+.session-form-field input,
+.session-form-field textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.session-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.session-form-buttons button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
