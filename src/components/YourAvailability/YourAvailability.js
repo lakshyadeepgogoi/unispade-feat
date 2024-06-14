@@ -5,11 +5,11 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 
 function YourAvailability() {
   const timeZones = [
-    "AFST:+04:30 (Kabul)",   
-    "BST:+06:00 (Dhaka)",    
-    "CST:+08:00 (Beijing, Shanghai, Hong Kong)",   
+    "AFST:+04:30 (Kabul)",
+    "BST:+06:00 (Dhaka)",
+    "CST:+08:00 (Beijing, Shanghai, Hong Kong)",
     "HKT:+08:00 (Hong Kong)",
-    "IST:+05:30 (Chennai, Kolkata, Mumbai, New Delhi)",   
+    "IST:+05:30 (Chennai, Kolkata, Mumbai, New Delhi)",
     "WITA:+08:00 (Bali, Makassar)",
     "JST:+09:00 (Tokyo)",
     "ALMT:+06:00 (Almaty)",
@@ -21,18 +21,18 @@ function YourAvailability() {
     "LKT:+05:30 (Colombo)",
     "THA:+07:00 (Bangkok)",
   ];
-  
+
   const noticePeriods = ["1 day before the call", "2 days before the call"];
   const calendars = ["Google Calendar", "Apple Calendar"];
 
   const initialSchedule = {
-    Monday: { checked: false, startTime: "", endTime: "" },
-    Tuesday: { checked: false, startTime: "", endTime: "" },
-    Wednesday: { checked: false, startTime: "", endTime: "" },
-    Thursday: { checked: false, startTime: "", endTime: "" },
-    Friday: { checked: false, startTime: "", endTime: "" },
-    Saturday: { checked: false, startTime: "", endTime: "" },
-    Sunday: { checked: false, startTime: "", endTime: "" },
+    Monday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
+    Tuesday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
+    Wednesday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
+    Thursday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
+    Friday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
+    Saturday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
+    Sunday: { checked: false, slots: [{ startTime: "", endTime: "" }] },
   };
 
   const [selectedTimeZone, setSelectedTimeZone] = useState("");
@@ -42,22 +42,25 @@ function YourAvailability() {
   const [calendarSync, setCalendarSync] = useState("");
   const [applyToAll, setApplyToAll] = useState(false);
 
-  const handleScheduleChange = (day, field, value) => {
-    setSchedule(prev => ({
-      ...prev,
-      [day]: { ...prev[day], [field]: value }
-    }));
+  const handleScheduleChange = (day, field, value, index) => {
+    setSchedule(prev => {
+      const newSchedule = { ...prev };
+      if (newSchedule[day]) {
+        newSchedule[day].slots[index][field] = value;
+      }
+      return newSchedule;
+    });
   };
 
   const handleApplyToAllChange = (checked) => {
     setApplyToAll(checked);
     if (checked) {
-      const mondaySchedule = schedule.Monday;
+      const mondaySchedule = schedule.Monday.slots.map(slot => ({ ...slot }));
       setSchedule(prev => {
         const newSchedule = { ...prev };
         Object.keys(newSchedule).forEach(day => {
-          if (day !== "Monday") {
-            newSchedule[day] = { ...mondaySchedule };
+          if (day !== "Monday" && newSchedule[day]) {
+            newSchedule[day].slots = [...mondaySchedule];
           }
         });
         return newSchedule;
@@ -65,6 +68,16 @@ function YourAvailability() {
     } else {
       setSchedule(initialSchedule); // Reset schedule to initial state
     }
+  };
+
+  const addTimeSlot = (day) => {
+    setSchedule(prev => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        slots: [...prev[day].slots, { startTime: "", endTime: "" }]
+      }
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -90,24 +103,38 @@ function YourAvailability() {
                 <input
                   type="checkbox"
                   checked={schedule[day].checked}
-                  onChange={(e) => handleScheduleChange(day, 'checked', e.target.checked)}
+                  onChange={(e) => {
+                    const { checked } = e.target;
+                    setSchedule(prev => ({
+                      ...prev,
+                      [day]: { ...prev[day], checked }
+                    }));
+                  }}
                 />
                 {day}
               </label>
+              <div className='time-slots-icon'>
+
               <div className="time-selectors">
-                <input
-                  type="time"
-                  value={schedule[day].startTime}
-                  onChange={(e) => handleScheduleChange(day, 'startTime', e.target.value)}
-                  disabled={!schedule[day].checked}
-                />
-                <span>-</span>
-                <input
-                  type="time"
-                  value={schedule[day].endTime}
-                  onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value)}
-                  disabled={!schedule[day].checked}
-                />
+                {schedule[day].slots && schedule[day].slots.map((slot, slotIndex) => (
+                  <div key={slotIndex} className="time-selector">
+                    <input
+                      type="time"
+                      value={slot.startTime}
+                      onChange={(e) => handleScheduleChange(day, 'startTime', e.target.value, slotIndex)}
+                      disabled={!schedule[day].checked}
+                    />
+                    <span> - </span>
+                    <input
+                      type="time"
+                      value={slot.endTime}
+                      onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value, slotIndex)}
+                      disabled={!schedule[day].checked}
+                    />
+                  </div>
+                ))}
+              </div>
+              <IoIosAddCircleOutline className="add-slot-icon" onClick={() => addTimeSlot(day)} />
               </div>
             </div>
             {day === "Monday" && (
@@ -151,7 +178,7 @@ function YourAvailability() {
       </div>
 
       <div className="form-buttons">
-        <button type="button" className="cancel-button" onClick={() => {/* handle cancel logic */}}>Cancel</button>
+        <button type="button" className="cancel-button" onClick={() => {/* handle cancel logic */ }}>Cancel</button>
         <button type="submit" className="save-button">Save</button>
       </div>
     </form>
