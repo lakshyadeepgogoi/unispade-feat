@@ -4,7 +4,7 @@ import YourSessions from './YourSessions/YourSessions';
 import Requests from './Requests';
 import Upcoming from './Upcoming';
 import History from './History';
-import YourAvailability from './YourAvailability';
+import YourAvailability from './YourAvailability/YourAvailability';
 
 const TabContent = ({ activeTab }) => {
   return (
