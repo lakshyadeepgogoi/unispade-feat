@@ -24,13 +24,16 @@
 .Tab {
   padding: 15px 20px;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  background-color: #f0f0f0;
+  background-color: white;
+  font-weight: 400;
+
 }
 
 .Tab.active {
-  background-color: #ccc;
+  background-color: #E0E0E0;
+  ;
 }
 
 .TabContent {

@@ -22,7 +22,7 @@ function YourAvailability() {
     "THA:+07:00 (Bangkok)",
   ];
 
-  const noticePeriods = ["1 day before the call", "2 days before the call"];
+  const noticePeriods = ["1 day ", "2 days "];
   const calendars = ["Google Calendar", "Apple Calendar"];
 
   const initialSchedule = {
@@ -102,12 +102,13 @@ function YourAvailability() {
       <div className='form-div'>
         <div className="form-group form-timezone">
           <label>TimeZone:</label>
-          <select value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.target.value)}>
+          <select value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.target.value)} className="custom-select">
             {timeZones.map(tz => <option key={tz} value={tz}>{tz}</option>)}
           </select>
         </div>
 
         <label className='label-schedule'>Schedule:</label>
+        <br></br>
         <div className="form-group schedule-group">
           {Object.keys(schedule).map((day, index) => (
             <React.Fragment key={day}>
@@ -195,8 +196,8 @@ function YourAvailability() {
         <div className="form-group">
           <label>Minimum Notice Period: </label>
           <div className='form-caption'>
-            <select value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)}>
-              {noticePeriods.map(period => <option key={period} value={period}>{period}</option>)}
+            <select value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)} className="custom-select">
+              {noticePeriods.map(period => <option key={period} value={period}><span className='notice-period-dropdown'>{period}</span>before the call</option>)}
             </select>
 
             <span className="note">What is the minimum notice period you want between the call booking and the actual call?</span>
@@ -207,7 +208,7 @@ function YourAvailability() {
         <div className="form-group">
           <label>Sync your calendar:</label>
           <div className='form-caption'>
-            <select value={calendarSync} onChange={(e) => setCalendarSync(e.target.value)}>
+            <select value={calendarSync} onChange={(e) => setCalendarSync(e.target.value)} className="custom-select">
               {calendars.map(cal => <option key={cal} value={cal}>{cal}</option>)}
             </select>
 
