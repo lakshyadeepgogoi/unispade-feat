@@ -51,7 +51,6 @@ function YourAvailability() {
       return newSchedule;
     });
   };
-
   const handleApplyToAllChange = (checked) => {
     setApplyToAll(checked);
     if (checked) {
@@ -59,9 +58,11 @@ function YourAvailability() {
       setSchedule(prev => {
         const newSchedule = { ...prev };
         Object.keys(newSchedule).forEach(day => {
-          if (day !== "Monday" && newSchedule[day]) {
-            newSchedule[day].slots = [...mondaySchedule];
-          }
+          newSchedule[day] = {
+            ...newSchedule[day],
+            checked: true,
+            slots: [...mondaySchedule]
+          };
         });
         return newSchedule;
       });
@@ -98,100 +99,107 @@ function YourAvailability() {
 
   return (
     <form className="availability-form" onSubmit={handleSubmit}>
-      <div className="form-group form-timezone">
-        <label>TimeZone:</label>
-        <select value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.target.value)}>
-          {timeZones.map(tz => <option key={tz} value={tz}>{tz}</option>)}
-        </select>
-      </div>
+      <div>
+        <div className="form-group form-timezone">
+          <label>TimeZone:</label>
+          <select value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.target.value)}>
+            {timeZones.map(tz => <option key={tz} value={tz}>{tz}</option>)}
+          </select>
+        </div>
 
-      <label>Schedule:</label>
-      <div className="form-group schedule-group">
-        {Object.keys(schedule).map((day, index) => (
-          <React.Fragment key={day}>
-            <div className="schedule-item">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={schedule[day].checked}
-                  onChange={(e) => {
-                    const { checked } = e.target;
-                    setSchedule(prev => ({
-                      ...prev,
-                      [day]: { ...prev[day], checked }
-                    }));
-                  }}
-                />
-                {day}
-              </label>
-              <div className='time-slots-icon'>
-                <div className="time-selectors">
-                  {schedule[day].slots && schedule[day].slots.map((slot, slotIndex) => (
-                    <div key={slotIndex} className="time-selector">
-                      <input
-                        type="time"
-                        value={slot.startTime}
-                        onChange={(e) => handleScheduleChange(day, 'startTime', e.target.value, slotIndex)}
-                        disabled={!schedule[day].checked}
-                      />
-                      <span> - </span>
-                      <input
-                        type="time"
-                        value={slot.endTime}
-                        onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value, slotIndex)}
-                        disabled={!schedule[day].checked}
-                        />
-                        {slotIndex !== 0 && <MdOutlineCancel className="cancel-slot-icon" onClick={() => removeTimeSlot(day, slotIndex)} />}
-                    </div>
-                  ))}
-                </div>
-                <IoIosAddCircleOutline className="add-slot-icon" onClick={() => addTimeSlot(day)} />
-              </div>
-            </div>
-            {day === "Monday" && (
-              <div className="apply-to-all">
+        <label>Schedule:</label>
+        <div className="form-group schedule-group">
+          {Object.keys(schedule).map((day, index) => (
+            <React.Fragment key={day}>
+              <div className="schedule-item">
                 <label>
                   <input
                     type="checkbox"
-                    checked={applyToAll}
-                    onChange={(e) => handleApplyToAllChange(e.target.checked)}
+                    checked={schedule[day].checked}
+                    onChange={(e) => {
+                      const { checked } = e.target;
+                      setSchedule(prev => ({
+                        ...prev,
+                        [day]: { ...prev[day], checked }
+                      }));
+                    }}
                   />
-                  Apply to all other days
+                  {day}
                 </label>
+                <div>
+
+                  <div className='time-slots-icon'>
+                    <div className="time-selectors">
+                      {schedule[day].slots && schedule[day].slots.map((slot, slotIndex) => (
+                        <div key={slotIndex} className="time-selector">
+                          <input
+                            type="time"
+                            value={slot.startTime}
+                            onChange={(e) => handleScheduleChange(day, 'startTime', e.target.value, slotIndex)}
+                            disabled={!schedule[day].checked}
+                          />
+                          <span> - </span>
+                          <input
+                            type="time"
+                            value={slot.endTime}
+                            onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value, slotIndex)}
+                            disabled={!schedule[day].checked}
+                          />
+                          {slotIndex !== 0 && <MdOutlineCancel className="cancel-slot-icon" onClick={() => removeTimeSlot(day, slotIndex)} />}
+                        </div>
+                      ))}
+                    </div>
+                    <IoIosAddCircleOutline className="add-slot-icon" onClick={() => addTimeSlot(day)} />
+                  </div>
+                  {day === "Monday" && (
+                    <div className="apply-to-all">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={applyToAll}
+                          onChange={(e) => handleApplyToAllChange(e.target.checked)}
+                        />
+                        Apply to all other days
+                      </label>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-          </React.Fragment>
-        ))}
+
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div className="form-group ">
+          <label>Maximum booking period: <span className="note">How far in the future do you want to allow the bookings to be made?</span></label>
+          <input type="date" value={maxBookingPeriod} onChange={(e) => setMaxBookingPeriod(e.target.value)} />
+        </div>
+
+        <div className="form-group">
+          <label>Minimum Notice Period: <span className="note">What is the minimum notice period you want between the call booking and the actual call?</span></label>
+          <select value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)}>
+            {noticePeriods.map(period => <option key={period} value={period}>{period}</option>)}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Sync your calendar: <span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span></label>
+          <select value={calendarSync} onChange={(e) => setCalendarSync(e.target.value)}>
+            {calendars.map(cal => <option key={cal} value={cal}>{cal}</option>)}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Integrate your meeting tool:<span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span> </label>
+          <input type="text" placeholder="Enter meeting tool integration details" />
+        </div>
+
+        <div className="form-buttons">
+          <button type="button" className="cancel-button" onClick={() => {/* handle cancel logic */ }}>Cancel</button>
+          <button type="submit" className="save-button">Save</button>
+        </div>
       </div>
 
-      <div className="form-group ">
-        <label>Maximum booking period: <span className="note">How far in the future do you want to allow the bookings to be made?</span></label>
-        <input type="date" value={maxBookingPeriod} onChange={(e) => setMaxBookingPeriod(e.target.value)} />
-      </div>
-
-      <div className="form-group">
-        <label>Minimum Notice Period: <span className="note">What is the minimum notice period you want between the call booking and the actual call?</span></label>
-        <select value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)}>
-          {noticePeriods.map(period => <option key={period} value={period}>{period}</option>)}
-        </select>
-      </div>
-
-      <div className="form-group">
-        <label>Sync your calendar: <span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span></label>
-        <select value={calendarSync} onChange={(e) => setCalendarSync(e.target.value)}>
-          {calendars.map(cal => <option key={cal} value={cal}>{cal}</option>)}
-        </select>
-      </div>
-
-      <div className="form-group">
-        <label>Integrate your meeting tool:<span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span> </label>
-        <input type="text" placeholder="Enter meeting tool integration details" />
-      </div>
-
-      <div className="form-buttons">
-        <button type="button" className="cancel-button" onClick={() => {/* handle cancel logic */ }}>Cancel</button>
-        <button type="submit" className="save-button">Save</button>
-      </div>
     </form>
   );
 }
