@@ -33,6 +33,11 @@
     border-radius: 5px;
   }
   
+  .form-group input[type="time"] {
+    font-family: "Times New Roman",Times, serif; 
+    font-weight: normal;
+  }
+  
   .schedule-group {
     border: 1px solid #ccc;
     border-radius: 12px;
@@ -98,13 +103,12 @@
     color: lightgrey;
     font-size: 0.8em;
     margin-left: 5px;
-
   }
-
-  .time-slots-icon{
+  
+  .time-slots-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:3px;
+    gap: 3px;
   }
   
