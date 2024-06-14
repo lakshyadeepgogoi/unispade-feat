@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './YourAvailability.css';
 import { IoIosAddCircleOutline } from "react-icons/io";
-
+import { MdOutlineCancel } from "react-icons/md";
 
 function YourAvailability() {
   const timeZones = [
@@ -80,6 +80,17 @@ function YourAvailability() {
     }));
   };
 
+  const removeTimeSlot = (day, slotIndex) => {
+    setSchedule(prev => {
+      const newSchedule = { ...prev };
+      // Check if the slot being removed is not the default slot (index 0)
+      if (slotIndex !== 0) {
+        newSchedule[day].slots.splice(slotIndex, 1); // Remove the slot at index slotIndex
+      }
+      return newSchedule;
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
@@ -114,27 +125,27 @@ function YourAvailability() {
                 {day}
               </label>
               <div className='time-slots-icon'>
-
-              <div className="time-selectors">
-                {schedule[day].slots && schedule[day].slots.map((slot, slotIndex) => (
-                  <div key={slotIndex} className="time-selector">
-                    <input
-                      type="time"
-                      value={slot.startTime}
-                      onChange={(e) => handleScheduleChange(day, 'startTime', e.target.value, slotIndex)}
-                      disabled={!schedule[day].checked}
-                    />
-                    <span> - </span>
-                    <input
-                      type="time"
-                      value={slot.endTime}
-                      onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value, slotIndex)}
-                      disabled={!schedule[day].checked}
-                    />
-                  </div>
-                ))}
-              </div>
-              <IoIosAddCircleOutline className="add-slot-icon" onClick={() => addTimeSlot(day)} />
+                <div className="time-selectors">
+                  {schedule[day].slots && schedule[day].slots.map((slot, slotIndex) => (
+                    <div key={slotIndex} className="time-selector">
+                      <input
+                        type="time"
+                        value={slot.startTime}
+                        onChange={(e) => handleScheduleChange(day, 'startTime', e.target.value, slotIndex)}
+                        disabled={!schedule[day].checked}
+                      />
+                      <span> - </span>
+                      <input
+                        type="time"
+                        value={slot.endTime}
+                        onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value, slotIndex)}
+                        disabled={!schedule[day].checked}
+                        />
+                        {slotIndex !== 0 && <MdOutlineCancel className="cancel-slot-icon" onClick={() => removeTimeSlot(day, slotIndex)} />}
+                    </div>
+                  ))}
+                </div>
+                <IoIosAddCircleOutline className="add-slot-icon" onClick={() => addTimeSlot(day)} />
               </div>
             </div>
             {day === "Monday" && (
@@ -186,3 +197,4 @@ function YourAvailability() {
 }
 
 export default YourAvailability;
+
