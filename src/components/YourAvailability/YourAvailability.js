@@ -67,7 +67,7 @@ function YourAvailability() {
         return newSchedule;
       });
     } else {
-      setSchedule(initialSchedule); // Reset schedule to initial state
+      setSchedule(initialSchedule); 
     }
   };
 
@@ -84,9 +84,9 @@ function YourAvailability() {
   const removeTimeSlot = (day, slotIndex) => {
     setSchedule(prev => {
       const newSchedule = { ...prev };
-      // Check if the slot being removed is not the default slot (index 0)
+      
       if (slotIndex !== 0) {
-        newSchedule[day].slots.splice(slotIndex, 1); // Remove the slot at index slotIndex
+        newSchedule[day].slots.splice(slotIndex, 1);
       }
       return newSchedule;
     });
@@ -99,7 +99,7 @@ function YourAvailability() {
 
   return (
     <form className="availability-form" onSubmit={handleSubmit}>
-      <div>
+      <div className='form-div'>
         <div className="form-group form-timezone">
           <label>TimeZone:</label>
           <select value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.target.value)}>
@@ -107,7 +107,7 @@ function YourAvailability() {
           </select>
         </div>
 
-        <label>Schedule:</label>
+        <label className='label-schedule'>Schedule:</label>
         <div className="form-group schedule-group">
           {Object.keys(schedule).map((day, index) => (
             <React.Fragment key={day}>
@@ -145,11 +145,23 @@ function YourAvailability() {
                             onChange={(e) => handleScheduleChange(day, 'endTime', e.target.value, slotIndex)}
                             disabled={!schedule[day].checked}
                           />
-                          {slotIndex !== 0 && <MdOutlineCancel className="cancel-slot-icon" onClick={() => removeTimeSlot(day, slotIndex)} />}
+                          {slotIndex !== 0 && (
+                            <MdOutlineCancel
+                              className="cancel-slot-icon"
+                              onClick={() => removeTimeSlot(day, slotIndex)}
+                            />
+                          )}
+                          {slotIndex === 0 && (
+                            <IoIosAddCircleOutline
+                              className="add-slot-icon"
+                              onClick={() => addTimeSlot(day)}
+                            />
+                          )}
                         </div>
                       ))}
+
                     </div>
-                    <IoIosAddCircleOutline className="add-slot-icon" onClick={() => addTimeSlot(day)} />
+                    
                   </div>
                   {day === "Monday" && (
                     <div className="apply-to-all">
@@ -171,27 +183,47 @@ function YourAvailability() {
         </div>
 
         <div className="form-group ">
-          <label>Maximum booking period: <span className="note">How far in the future do you want to allow the bookings to be made?</span></label>
-          <input type="date" value={maxBookingPeriod} onChange={(e) => setMaxBookingPeriod(e.target.value)} />
+          <label>Maximum booking period: </label>
+          <div className='form-caption'>
+
+            <input type="date" value={maxBookingPeriod} onChange={(e) => setMaxBookingPeriod(e.target.value)} />
+
+            <span className="note">How far in the future do you want to allow the bookings to be made?</span>
+          </div>
         </div>
 
         <div className="form-group">
-          <label>Minimum Notice Period: <span className="note">What is the minimum notice period you want between the call booking and the actual call?</span></label>
-          <select value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)}>
-            {noticePeriods.map(period => <option key={period} value={period}>{period}</option>)}
-          </select>
+          <label>Minimum Notice Period: </label>
+          <div className='form-caption'>
+            <select value={noticePeriod} onChange={(e) => setNoticePeriod(e.target.value)}>
+              {noticePeriods.map(period => <option key={period} value={period}>{period}</option>)}
+            </select>
+
+            <span className="note">What is the minimum notice period you want between the call booking and the actual call?</span>
+
+          </div>
         </div>
 
         <div className="form-group">
-          <label>Sync your calendar: <span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span></label>
-          <select value={calendarSync} onChange={(e) => setCalendarSync(e.target.value)}>
-            {calendars.map(cal => <option key={cal} value={cal}>{cal}</option>)}
-          </select>
+          <label>Sync your calendar:</label>
+          <div className='form-caption'>
+            <select value={calendarSync} onChange={(e) => setCalendarSync(e.target.value)}>
+              {calendars.map(cal => <option key={cal} value={cal}>{cal}</option>)}
+            </select>
+
+            <span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span>
+
+          </div>
         </div>
 
         <div className="form-group">
-          <label>Integrate your meeting tool:<span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span> </label>
-          <input type="text" placeholder="Enter meeting tool integration details" />
+          <label>Integrate your meeting tool: </label>
+
+          <div className='form-caption'>
+            <input type="text" placeholder="Enter meeting tool integration details" />
+            <span className="note">Candidates will not be able to book sessions during the slots with existing events on your calendar</span>
+
+          </div>
         </div>
 
         <div className="form-buttons">
