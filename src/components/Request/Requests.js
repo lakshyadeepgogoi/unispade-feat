@@ -3,7 +3,9 @@ import { BsArrowDownLeft } from "react-icons/bs";
 import { IoMdTimer } from "react-icons/io";
 import { MdOutlineMessage } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
-import { FaChevronRight, FaInfo } from "react-icons/fa6";
+import {  FaInfo } from "react-icons/fa6";
+import { MdOutlineDone } from "react-icons/md";
+
 import './Requests.css';
 
 function Requests() {
@@ -53,7 +55,8 @@ function Requests() {
                 <MdOutlineMessage />
               </button>
               <button className="action-button">
-                <FaChevronRight />
+              <MdOutlineDone />
+
               </button>
               <button className="action-button">
                 <RxCross2 />
