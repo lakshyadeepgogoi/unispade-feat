@@ -1,0 +1,113 @@
+.request-item {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;  
+  background-color: #fff;
+}
+
+.request-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 20px;
+  width: 660px; 
+}
+
+.request-header p {
+  margin: 0 0 0 10px;
+  flex: 1; 
+  font-weight: 400;
+  line-height: 27px;
+}
+
+.profile-img {
+  border: 1px solid #000;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  background-color: #ccc; 
+}
+
+.request-header span {
+  color: gray;
+  margin-left: 5px;
+  font-weight: 400;
+  line-height: 27px;
+}
+
+.icon.top-right {
+  color: black;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.request-actions {
+  display: flex;
+  gap: 10px;
+  background-color: #fff;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 23px;
+  width: 175px;
+  gap: 10px;
+}
+
+.action-item p {
+  margin: 0;
+  margin-left: 5px;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.action-button {
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  background-color: white;
+}
+
+.action-button.active {
+  background: rgba(224, 224, 224, 1);
+
+}
+.action-item.active {
+  background: rgba(224, 224, 224, 1);
+
+}
+
+/* Styles for the second section */
+.details-section {
+  border-radius: 20px;
+  background-color: #F7F7F7;
+  padding: 30px;
+  margin-top: 1.25rem;
+}
+
+.details-section p {
+  margin: 0.625rem 0;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 27px;
+  text-align: left;
+}
+
+.description{
+  width: 60%;
+}
+
+.details-section span {
+  font-weight: bold;
+}
