@@ -133,6 +133,7 @@ function Requests() {
 
           {visibleRescheduleId === request.id && (
             <div className="details-section">
+              <div className='details-section-container'>
               <div className='reschedule-section'>
                 <div className="calendar-container">
                   <p>Select day</p>
@@ -147,19 +148,21 @@ function Requests() {
                 <div className="time-slot-container">
                   <p>Select time slots</p>
                   <div className="time-selector">
-                    <input
-                      type="time"
-                      value={startTime}
-                      onChange={handleStartTimeChange}
-                      className="time-input"
-                    />
-                    <span> - </span>
-                    <input
-                      type="time"
-                      value={endTime}
-                      onChange={handleEndTimeChange}
-                      className="time-input"
-                    />
+                    <div className="time-slot">
+                      <input
+                        type="time"
+                        value={startTime}
+                        onChange={handleStartTimeChange}
+                        className="time-input"
+                      />
+                      <span> - </span>
+                      <input
+                        type="time"
+                        value={endTime}
+                        onChange={handleEndTimeChange}
+                        className="time-input"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -168,6 +171,8 @@ function Requests() {
                 <button className="cancel-button" onClick={() => setVisibleRescheduleId(null)}>Cancel</button>
                 <button className="reschedule-button" onClick={() => handleReschedule(request.id)}>Reschedule</button>
               </div>
+              </div>
+
             </div>
           )}
         </div>
