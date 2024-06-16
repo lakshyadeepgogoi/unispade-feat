@@ -2,20 +2,25 @@ import React from 'react';
 import './TabContent.css'; 
 import YourSessions from './YourSessions/YourSessions';
 import Requests from './Request/Requests';
-import Upcoming from './Upcoming';
+import Upcoming from './Upcoming/Upcoming';
 import History from './History';
 import YourAvailability from './YourAvailability/YourAvailability';
 
-const TabContent = ({ activeTab }) => {
-  return (
-    <div className="TabContent">
-      {activeTab === 'YourSessions' && <YourSessions />}
-      {activeTab === 'Requests' && <Requests />}
-      {activeTab === 'Upcoming' && <Upcoming />}
-      {activeTab === 'History' && <History />}
-      {activeTab === 'YourAvailability' && <YourAvailability />}
-    </div>
-  );
-};
+function TabContent({ activeTab }) {
+  switch (activeTab) {
+    case 'YourSessions':
+      return <YourSessions />;
+    case 'Requests':
+      return <Requests />;
+    case 'Upcoming':
+      return <Upcoming />;
+    case 'History':
+      return <History />;
+    case 'YourAvailability':
+      return <YourAvailability />;
+    default:
+      return null;
+  }
+}
 
 export default TabContent;

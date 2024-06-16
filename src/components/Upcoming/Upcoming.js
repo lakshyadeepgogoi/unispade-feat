@@ -1,32 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { BsArrowDownLeft } from "react-icons/bs";
 import { IoMdTimer } from "react-icons/io";
 import { MdOutlineMessage, MdOutlineDone } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { FaInfo } from "react-icons/fa6";
+import { UpcomingContext } from '../../context/UpcomingContext';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { UpcomingContext } from '../../context/UpcomingContext'; // Import the context
+import './Upcoming.css'; // Import corrected CSS path
 
-import './Requests.css';
-
-function Requests() {
-  const { addUpcomingRequest } = useContext(UpcomingContext); // Use the context
+function Upcoming() {
+  const { upcomingRequests, addUpcomingRequest } = useContext(UpcomingContext);
 
   const [visibleDetailsId, setVisibleDetailsId] = useState(null);
   const [visibleRescheduleId, setVisibleRescheduleId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [requests, setRequests] = useState([
-    { id: 1, name: "Vishwa Vijay Rana", email: "ranavishwvijay@gmail.com", interviewDate: "27th August 2024, Monday", interviewStartTime: "20:00 PM", interviewEndTime: "21:00 PM",description:"Lorem ipsum dolor sit amet consectetur. Est ut mauris ut consequat platea lorem tincidunt. Vestibulum odio nunc vitae dignissim maecenas pellentesque nunc viverra duis hendrerit. Vitae amet orci ullamcorper arcu." },
-    { id: 2, name: "Manas Bora", email: "manas@gmail.com", interviewDate: "27th August 2024, Monday", interviewStartTime: "20:30 PM", interviewEndTime: "21:30 PM",description:"aliquet sapien sed imperdiet. Ridiculus nulla placerat augue eu blandit sed. Arcu orci adipiscing nulla imperdiet eu erat eget amet enim.  " },
-    { id: 3, name: "Inderjeet Singh", email: "inder@gmail.com", interviewDate: "27th August 2024, Monday", interviewStartTime: "19:00 PM", interviewEndTime: "20:30 PM",description:"Dolor neque ac sed scelerisque nibh id phasellus diam. Id feugiat mattis nulla enim" }
-  ]);
 
   const toggleDetails = (id) => {
     if (visibleDetailsId === id) {
-      setVisibleDetailsId(null);
+      setVisibleDetailsId(null); // Toggle off if already visible
     } else {
       setVisibleDetailsId(id);
       setVisibleRescheduleId(null); // Close reschedule section if open
@@ -35,7 +29,7 @@ function Requests() {
 
   const toggleReschedule = (id) => {
     if (visibleRescheduleId === id) {
-      setVisibleRescheduleId(null);
+      setVisibleRescheduleId(null); // Toggle off if already visible
     } else {
       setVisibleRescheduleId(id);
       setVisibleDetailsId(null); // Close details section if open
@@ -51,39 +45,23 @@ function Requests() {
   };
 
   const handleReschedule = (requestId) => {
-    const updatedRequests = requests.map(request => {
+    const updatedRequests = upcomingRequests.map(request => {
       if (request.id === requestId) {
         return {
           ...request,
-          interviewDate: formatDate(selectedDate),
-          interviewStartTime: formatTime(startTime),
-          interviewEndTime: formatTime(endTime)
+          interviewDate: selectedDate,
+          interviewStartTime: startTime,
+          interviewEndTime: endTime
         };
       }
       return request;
     });
 
-    setRequests(updatedRequests);
+    // Update the context with the new list of requests
+    // This part should ideally call a function from UpcomingContext to update the context state.
+    // Assuming addUpcomingRequest is used to add, you should also have a method to update existing requests.
+    // setRequests(updatedRequests);
     setVisibleRescheduleId(null);
-  };
-
-  const handleDone = (requestId) => {
-    const doneRequest = requests.find(request => request.id === requestId);
-    addUpcomingRequest(doneRequest);
-    setRequests(requests.filter(request => request.id !== requestId));
-  };
-
-  const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  };
-
-  const formatTime = (time) => {
-    const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours, 10);
-    const formattedHour = (hour % 12 || 12).toString(); // Convert to 12-hour format
-    const period = hour >= 12 ? 'PM' : 'AM';
-    return `${formattedHour}:${minutes} ${period}`;
   };
 
   const calculateDuration = (start, end) => {
@@ -100,7 +78,7 @@ function Requests() {
 
   return (
     <div className="requests-container">
-      {requests.map((request) => (
+      {upcomingRequests.map((request) => (
         <div key={request.id} className="request-container">
           <div className="request-item">
             <div className="request-header">
@@ -115,9 +93,6 @@ function Requests() {
               </div>
               <button className="action-button">
                 <MdOutlineMessage />
-              </button>
-              <button className="action-button" onClick={() => handleDone(request.id)}>
-                <MdOutlineDone />
               </button>
               <button className="action-button">
                 <RxCross2 />
@@ -181,7 +156,6 @@ function Requests() {
                   <button className="reschedule-button" onClick={() => handleReschedule(request.id)}>Reschedule</button>
                 </div>
               </div>
-
             </div>
           )}
         </div>
@@ -190,4 +164,4 @@ function Requests() {
   );
 }
 
-export default Requests;
+export default Upcoming;
