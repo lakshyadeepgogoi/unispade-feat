@@ -111,3 +111,67 @@
 .details-section span {
   font-weight: bold;
 }
+
+.calendar-container {
+  margin-top: 10px;
+}
+
+.time-slot-container {
+  margin-top: 10px;
+}
+
+.date-picker {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+}
+
+.time-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  width: 100%;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.cancel-button {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.reschedule-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Flex layout for the reschedule section */
+.reschedule-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.reschedule-section > div {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.reschedule-section .buttons-container {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+}
