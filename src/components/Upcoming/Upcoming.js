@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { BsArrowDownLeft } from "react-icons/bs";
 import { IoMdTimer } from "react-icons/io";
 import { MdOutlineMessage, MdOutlineDone } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
@@ -7,7 +6,7 @@ import { FaInfo } from "react-icons/fa6";
 import { UpcomingContext } from '../../context/UpcomingContext';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './Upcoming.css'; // Import corrected CSS path
+import './Upcoming.css'; // Corrected CSS path
 
 function Upcoming() {
   const { upcomingRequests, addUpcomingRequest } = useContext(UpcomingContext);
@@ -84,12 +83,11 @@ function Upcoming() {
             <div className="request-header">
               <div className='profile-img'></div>
               <p>{request.name} | <span>{request.email}</span></p>
-              <BsArrowDownLeft className="icon top-right" />
             </div>
             <div className="request-actions">
               <div className={`action-item ${visibleRescheduleId === request.id ? 'active' : ''}`} onClick={() => toggleReschedule(request.id)}>
                 <IoMdTimer />
-                <p>Reschedule</p>
+                <p>{visibleRescheduleId === request.id ? "Resudule" : "Reschedule"}</p> {/* Conditionally render "Resudule" */}
               </div>
               <button className="action-button">
                 <MdOutlineMessage />
@@ -108,8 +106,17 @@ function Upcoming() {
 
           {visibleDetailsId === request.id && (
             <div className="details-section">
-              <p><span>Mock Interview </span>| <span>{calculateDuration(request.interviewStartTime, request.interviewEndTime)} minutes</span></p>
-              <p>{request.interviewDate} | {request.interviewStartTime}</p>
+              
+              <div className='details-container'>
+                <div>
+                <p><span>Mock Interview </span>| <span>{calculateDuration(request.interviewStartTime, request.interviewEndTime)} minutes</span></p>
+                <p>{request.interviewDate} | {request.interviewStartTime}</p>
+              </div>
+              <button className='join-button'>
+                Join the call
+              </button>
+
+                </div>
               <br></br>
               <p className='description'>{request.description}</p>
             </div>
