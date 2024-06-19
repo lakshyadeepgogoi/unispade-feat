@@ -3,7 +3,7 @@ import './TabContent.css';
 import YourSessions from './YourSessions/YourSessions';
 import Requests from './Request/Requests';
 import Upcoming from './Upcoming/Upcoming';
-import History from './History';
+import History from './History-com/History';
 import YourAvailability from './YourAvailability/YourAvailability';
 
 function TabContent({ activeTab }) {

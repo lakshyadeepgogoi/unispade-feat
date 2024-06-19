@@ -87,7 +87,7 @@ function Upcoming() {
             <div className="request-actions">
               <div className={`action-item ${visibleRescheduleId === request.id ? 'active' : ''}`} onClick={() => toggleReschedule(request.id)}>
                 <IoMdTimer />
-                <p>{visibleRescheduleId === request.id ? "Resudule" : "Reschedule"}</p> {/* Conditionally render "Resudule" */}
+                <p>Reschedule</p>
               </div>
               <button className="action-button">
                 <MdOutlineMessage />
